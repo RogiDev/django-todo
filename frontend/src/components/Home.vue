@@ -1,18 +1,19 @@
 <template>
   <v-container class="justify-center align-center text-center">
     <v-row>
-      <my-form />
+      <my-form/>
     </v-row>
-    <v-row>
-       <tasks />
+  <v-row>
+      <tasks/>
     </v-row>
 
   </v-container>
 </template>
 
 <script>
-import Tasks from "./Tasks";
-import MyForm from "./Form";
+  import Tasks from "./Tasks";
+  import MyForm from "./Form";
+  import AuthModule from "../store/modules/Auth.module";
 
   export default {
     name: 'Home',
@@ -22,6 +23,14 @@ import MyForm from "./Form";
     },
     data() {
       return {}
+    },
+    computed: {
+      isUserAuth() {
+        return this.$store.state.AuthModule.isAuth;
+      },
+      token() {
+        return this.$store.state.AuthModule.jwt;
+      }
     }
   }
 </script>

@@ -1,12 +1,15 @@
 <template>
-  <v-col class="mx-auto">
+  <v-col cols="12"
+         md="6"
+         class="mx-auto my-auto"
+  >
 
+<v-container>
     <v-form v-model="valid" @submit.prevent="onSubmit">
-
 
       <v-col
         cols="12"
-        md="6"
+
         class="mx-auto"
       >
         <v-text-field
@@ -21,7 +24,7 @@
 
       <v-col
         cols="12"
-        md="6"
+
         class="mx-auto"
       >
         <v-textarea
@@ -35,7 +38,7 @@
         ></v-textarea>
       </v-col>
       <v-col>
-        <v-btn class="ma-2" tile outlined color="success">
+        <v-btn class="ma-2" type="submit" tile outlined color="success">
           Add
           <v-icon right>mdi-plus-thick</v-icon>
         </v-btn>
@@ -43,7 +46,7 @@
 
 
     </v-form>
-
+</v-container>
   </v-col>
 
 </template>
@@ -55,9 +58,9 @@
       return {
         valid: false,
         form: {
-          title: '',
-          description: '',
-
+        title:"",
+        description:"",
+        user:""
         },
         titleRules: [
           v => !!v || 'title is required',
@@ -69,9 +72,18 @@
         ]
       }
     },
+    computed:{
+      getUser(){
+        return this.$store.getters.username.authUser.user_id;
+      }
+    },
     methods: {
       onSubmit() {
-
+          this.form.user = this.getUser;
+          this.$store.dispatch('addTask',this.form).then(res => {
+            this.form = {};
+            }
+          )
       }
     }
   }

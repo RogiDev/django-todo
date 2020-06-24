@@ -1,6 +1,6 @@
 <template>
   <v-col class="mx-auto my-auto">
-    <v-form v-model="valid" @submit.prevent="onSubmit">
+    <v-form v-model="valid" @submit.prevent="onSubmit()">
       <v-container>
         <v-card>
           <v-toolbar
@@ -17,7 +17,7 @@
             class="mx-auto"
           >
             <v-text-field
-              v-model="email"
+              v-model="form.email"
               :rules="rules"
               :counter="120"
               label="E-Mail"
@@ -31,19 +31,19 @@
             class="mx-auto"
           >
             <v-text-field
-              v-model="password"
+              v-model="form.password"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               name="password"
               label="Password"
-              hint="At least 8 characters"
+              hint="At least 6 characters"
               counter
               @click:append="show = !show"
             ></v-text-field>
           </v-col>
           <v-row>
             <v-container class="text-center ">
-              <v-btn tile color="success" class="mx-3" @click="login">
+              <v-btn tile color="success" class="mx-3" type="submit">
                 Login
                 <v-icon right>mdi-login</v-icon>
               </v-btn>
@@ -65,14 +65,19 @@
 </template>
 
 <script>
+  import AuthModule from "../store/modules/Auth.module";
+
   export default {
     name: "login",
     data() {
       return {
         show: false,
         valid: false,
-        email: '',
-        password: '',
+        form: {
+          email: '',
+          password: ''
+        },
+
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 6 || 'Min 6 characters',
@@ -84,9 +89,9 @@
       registerBtn() {
         this.$router.push('register');
       },
-      async login() {
-        await this.$store.dispatch('loginUser', {email:this.email,password:this.password});
-        await this.$router.push('/');
+      onSubmit() {
+        this.$store.dispatch('loginUser', this.form);
+
 
       }
     }

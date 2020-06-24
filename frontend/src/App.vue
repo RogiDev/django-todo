@@ -4,11 +4,19 @@
       app
       color="primary"
       dark
-      class="d-flex justify-center align-content-center text-center align-center"
+      class="d-flex justify-space-between align-content-center text-center align-center"
     >
 
         <h2 class="">Todo App</h2>
+        <v-spacer>
+        </v-spacer>
 
+       <template v-if=" this.$router.currentRoute.path !== '/login' &&  this.$router.currentRoute.path !== '/register' " v-slot:extension>
+        <v-tabs align-with-title>
+
+          <v-tab @click="logout">logout</v-tab>
+        </v-tabs>
+      </template>
     </v-app-bar>
 
     <v-content>
@@ -25,6 +33,21 @@ export default {
   data(){
     return{
     }
-  }
+  },
+  computed:{
+    isAuth(){
+      return this.$store.getters.isAuth;
+    },
+    token(){
+      return this.$store.getters.token;
+    }
+  },
+  methods:{
+      logout(){
+        this.$store.dispatch('logoutUser').then(res =>
+          this.$router.push('/login')
+        )
+      }
+    }
 };
 </script>

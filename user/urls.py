@@ -1,10 +1,8 @@
-from django.urls import path
-from .views import registraion_view
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+from rest_framework.routers import DefaultRouter
+from .views import UserViewSet
 
+router = DefaultRouter()
 
+router.register('users', UserViewSet)
 
-urlpatterns = (
-    path('register', registraion_view),
-    path('login', obtain_jwt_token)
-)
+urlpatterns = router.urls

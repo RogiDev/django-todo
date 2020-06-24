@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from task.models import Task
 
 
 class Manager(BaseUserManager):
@@ -43,9 +44,6 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     objects = Manager()
-
-    def __str__(self):
-        return self.email
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

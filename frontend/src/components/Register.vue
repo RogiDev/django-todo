@@ -44,9 +44,10 @@
             class="mx-auto"
           >
             <v-text-field
-              v-model="form.firstName"
+              v-model="form.first_name"
               :rules="rules"
               label="First Name"
+              name="first_name"
               required
             ></v-text-field>
           </v-col>
@@ -56,9 +57,10 @@
             class="mx-auto"
           >
             <v-text-field
-              v-model="form.lastName"
+              v-model="form.last_name"
               :rules="rules"
               label="Last Name"
+              name="last_name"
               required
             ></v-text-field>
           </v-col>
@@ -74,7 +76,7 @@
               :type="show ? 'text' : 'password'"
               name="password"
               label="Password"
-              hint="At least 8 characters"
+              hint="At least 6 characters"
               counter
               @click:append="show = !show"
             ></v-text-field>
@@ -85,13 +87,13 @@
             class="mx-auto"
           >
             <v-text-field
-              v-model="form.passwordAgian"
+              v-model="form.password_again"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="passwordRules"
               :type="show ? 'text' : 'password'"
-              name="passwordAgian"
+              name="password_again"
               label="Password Confirm"
-              hint="At least 8 characters"
+              hint="At least 6 characters"
               counter
               @click:append="show = !show"
             ></v-text-field>
@@ -99,7 +101,7 @@
 
           <v-row>
             <v-container class="text-center ">
-              <v-btn tile color="success" class="mx-3">
+              <v-btn tile color="success" type="submit" class="mx-3">
                 Register
                 <v-icon right>mdi-plus-thick</v-icon>
               </v-btn>
@@ -122,9 +124,9 @@
         form: {
           username: '',
           password: '',
-          passwordAgian: '',
-          firstName: '',
-          lastName: '',
+          password_again: '',
+          first_name: '',
+          last_name: '',
           email: ''
         },
 
@@ -134,13 +136,13 @@
         ],
         passwordRules: [
           value => !!value || 'Require.',
-          v => v.length >= 8 || 'Min 8 characters',
+          v => v.length >= 6 || 'Min 6 characters',
         ]
       }
     },
     methods:{
         onSubmit(){
-          this.$store.dispatch()
+          this.$store.dispatch('registerUser',this.form)
         }
     }
   }

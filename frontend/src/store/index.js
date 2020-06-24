@@ -1,16 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import UserModule from './modules/User.module.js'
+import AuthModule from './modules/Auth.module.js'
 import TaskModule from './modules/Task.module.js'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     loading: false
   },
   modules: {
-    UserModule,
+    AuthModule,
     TaskModule
-   }
+  }
 });
 export default store;

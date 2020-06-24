@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import User
+from django.conf import settings
 
 
 class Task(models.Model):
@@ -7,10 +7,7 @@ class Task(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
     description = models.TextField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
-
-    def __str__(self):
-        return self.title
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="user_tasks")
 
     class Meta:
-        ordering = ['completed', 'date']
+        ordering = ['date','completed']
